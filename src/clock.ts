@@ -8,7 +8,7 @@ class Clock extends LitElement {
 
   render() {
     return html`
-        ${this.counter}
+        ${this.counter}s
     `;
   }
 

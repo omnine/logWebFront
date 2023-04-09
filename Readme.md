@@ -22,3 +22,6 @@ Build the Application
 ```bash
 npm run build
 ```
+
+## Size (Lit vs React)
+https://pinkhominid.github.io/react-v-lit/
