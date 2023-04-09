@@ -1,10 +1,16 @@
-import { LitElement, html} from 'lit';
+import { LitElement, css, html} from 'lit';
 
 import { customElement, property } from 'lit/decorators.js';
 
+import './clock';
 
 @customElement('comp-main')
 export class CompMain extends LitElement {
+    static styles = css`
+    :host {
+        display: flex;
+    }
+    `;
 
     @property({ type: String }) message: string = 'IIS Agent RealTime Log';
 
@@ -36,9 +42,9 @@ export class CompMain extends LitElement {
             <h2>${this.message1}</h2>
             <ul>
                 <li>TypeScript</li>
-                <li>Rollup.js</li>
                 <li>es-dev-server</li>
             </ul>
+            <nano-clock></nano-clock>
         </div>
         `;
     }
