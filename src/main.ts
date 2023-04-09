@@ -29,17 +29,27 @@ export class CompMain extends LitElement {
     }
 
     recording(event: Event) {
-        if(this.recordingStatus) {
-            this.message1 = "Recording....";
-            this.intervalID = window.setInterval(() => this.tick(), 1000);
-        }
-        else {
-            window.clearInterval(this.intervalID);
-            this.counter = 0;
-            this.message1 = "You will get the records soon";
-        }
-        this.recordingStatus = !this.recordingStatus;
+        if(this.recordingStatus)
+            return;
+
+        this.recordingStatus = true;
+
+        this.message1 = "Recording....";
+        this.intervalID = window.setInterval(() => this.tick(), 1000);
+
     }
+
+    stop(event: Event) {
+        if(!this.recordingStatus)
+            return;
+        
+        this.recordingStatus = false;
+
+        window.clearInterval(this.intervalID);
+        this.counter = 0;
+        this.message1 = "You will get the records soon";
+
+    }    
 
     render() {
         return html`
@@ -50,13 +60,16 @@ export class CompMain extends LitElement {
             <p>Please press the record button to start recording, then reproduce your problem.</p>
             <p>Once the problem is reproduced, press the stop button.</p>
             <button @click=${this.recording}>Record</button>
-            <button @click=${this.recording}>Stop</button>
-            ${this.counter}s
+            <button @click=${this.stop}>Stop</button>
+            ${this.recordingStatus
+                ? html`
+                    ${this.counter}s
+                `
+                : html`
+
+                `}
+            
             <h2>${this.message1}</h2>
-            <ul>
-                <li>TypeScript</li>
-                <li>es-dev-server</li>
-            </ul>
         </div>
         `;
     }
