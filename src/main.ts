@@ -1,6 +1,7 @@
 import { LitElement, css, html} from 'lit';
 
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
+import {when} from 'lit/directives/when.js';
 
 import './clock';
 
@@ -11,6 +12,12 @@ export class CompMain extends LitElement {
         display: flex;
     }
     `;
+
+    @state()
+    stage:number = 0;
+
+    @property()
+    list = ['Peas', 'Carrots', 'Tomatoes'];
 
     @property() counter: number = 0;
     @property() intervalID: number = 0;
@@ -28,9 +35,15 @@ export class CompMain extends LitElement {
 
     }
 
+    reset() {
+        this.stage = 0;
+    }
+
     recording(event: Event) {
         if(this.recordingStatus)
             return;
+
+        this.stage = 1;
 
         this.recordingStatus = true;
 
@@ -44,10 +57,13 @@ export class CompMain extends LitElement {
             return;
         
         this.recordingStatus = false;
+        this.stage = 2;
 
         window.clearInterval(this.intervalID);
         this.counter = 0;
         this.message1 = "You will get the records soon";
+
+        //start to collect data from the server
 
     }    
 
@@ -69,7 +85,15 @@ export class CompMain extends LitElement {
 
                 `}
             
-            <h2>${this.message1}</h2>
+            <h2>${when(this.stage == 2, () => html`Please wait...`)}</h2>
+            <ul>
+                ${this.list.map(
+                (item, index) =>
+                    html`
+                    <li>${index}: ${item}</li>
+                    `
+                )}
+            </ul>
         </div>
         `;
     }
