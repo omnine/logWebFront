@@ -75,8 +75,9 @@ export class CompMain extends LitElement {
                 especially when the problem can be reproduced.</p>
             <p>Please press the record button to start recording, then reproduce your problem.</p>
             <p>Once the problem is reproduced, press the stop button.</p>
-            <button @click=${this.recording}>Record</button>
-            <button @click=${this.stop}>Stop</button>
+            <button @click=${this.reset}>Reset</button>
+            <button @click=${this.recording} ?disabled=${this.stage == 1}>Record</button>
+            <button @click=${this.stop} ?disabled=${this.stage != 1}>Stop</button>
             ${this.recordingStatus
                 ? html`
                     ${this.counter}s
