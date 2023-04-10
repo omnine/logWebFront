@@ -39,6 +39,31 @@ export class CompMain extends LitElement {
         this.stage = 0;
     }
 
+    /*
+    Somehow couldn't make this library work under ts,
+    https://github.com/eligrey/FileSaver.js/
+    So, used the way described in https://gist.github.com/philipstanislaus/c7de1f43b52531001412?permalink_comment_id=4285625#gistcomment-4285625
+    */
+
+    saveBlob = (function () {
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+  
+        return function (blob:Blob, fileName:string) {
+          const url = window.URL.createObjectURL(blob);
+          a.href = url;
+          a.download = fileName;
+          a.click();
+          window.URL.revokeObjectURL(url);
+        };
+      })();
+
+    download() {
+        var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+        this.saveBlob(blob, "iislog.txt");
+    }
+
     recording(event: Event) {
         if(this.recordingStatus)
             return;
@@ -85,7 +110,7 @@ export class CompMain extends LitElement {
                 : html`
 
                 `}
-            
+            <button @click=${this.download}>Save</button>
             <h2>${when(this.stage == 2, () => html`Please wait...`)}</h2>
             <ul>
                 ${this.list.map(
