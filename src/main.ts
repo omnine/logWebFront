@@ -21,7 +21,7 @@ export class CompMain extends LitElement {
     stage:number = 0;   // 0 - init, 1 - recording, 2- stopped,  3- data arrived
 
     @property()
-    list = ['Peas', 'Carrots', 'Tomatoes'];
+    list = [];
 
     @property() counter: number = 0;
     @property() intervalID: number = 0;
@@ -100,6 +100,7 @@ export class CompMain extends LitElement {
             response.text().then(body => {
                 console.log(body);
                 this.log = body;
+                this.list = JSON.parse('["Peas", "Carrots", "Tomatoes"]');
                 this.stage = 3;
             });
             }
