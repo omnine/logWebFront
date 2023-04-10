@@ -62,7 +62,12 @@ export class CompMain extends LitElement {
       })();
 
     download() {
-        var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+        let body:string = "[]";
+        if(this.log) {
+            body = this.log;
+        }
+
+        var blob = new Blob([body], {type: "text/plain;charset=utf-8"});
         this.saveBlob(blob, "iislog.txt");
     }
 
@@ -95,6 +100,7 @@ export class CompMain extends LitElement {
             response.text().then(body => {
                 console.log(body);
                 this.log = body;
+                this.stage = 3;
             });
             }
         )
