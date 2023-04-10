@@ -24,7 +24,7 @@
     "@open-wc/building-rollup": "^2.2.3",
     "@web/dev-server": "0.0.29",
     "concurrently": "^5.3.0",
-    "deepmerge": "^4.2.2",
+    "deepmerge": "^4.3.1",
     "rimraf": "^5.0.0",
     "rollup": "^2.34.2",
     "typescript": "^5.0.4"
