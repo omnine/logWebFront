@@ -3,6 +3,8 @@ import { LitElement, css, html} from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
+import ky from 'ky';
+
 import './clock';
 
 @customElement('comp-main')
@@ -13,8 +15,10 @@ export class CompMain extends LitElement {
     }
     `;
 
+    @state() log:string | undefined;
+
     @state()
-    stage:number = 0;
+    stage:number = 0;   // 0 - init, 1 - recording, 2- stopped,  3- data arrived
 
     @property()
     list = ['Peas', 'Carrots', 'Tomatoes'];
@@ -24,8 +28,6 @@ export class CompMain extends LitElement {
     @property({ type: String }) message: string = 'IIS Agent RealTime Log';
 
     @property()
-    message1: string = 'Hello again.';
-    message2: string = 'Hello again.';
     recordingStatus: boolean = false;
 
 
@@ -72,7 +74,7 @@ export class CompMain extends LitElement {
 
         this.recordingStatus = true;
 
-        this.message1 = "Recording....";
+
         this.intervalID = window.setInterval(() => this.tick(), 1000);
 
     }
@@ -86,9 +88,20 @@ export class CompMain extends LitElement {
 
         window.clearInterval(this.intervalID);
         this.counter = 0;
-        this.message1 = "You will get the records soon";
+
 
         //start to collect data from the server
+        ky('/packets').then((response) => {
+            response.text().then(body => {
+                console.log(body);
+                this.log = body;
+            });
+            }
+        )
+        .catch((error) => {
+            console.log(error)
+          });;
+
 
     }    
 
@@ -110,7 +123,7 @@ export class CompMain extends LitElement {
                 : html`
 
                 `}
-            <button @click=${this.download}>Save</button>
+            <button @click=${this.download} ?disabled=${this.stage != 3}>Save</button>
             <h2>${when(this.stage == 2, () => html`Please wait...`)}</h2>
             <ul>
                 ${this.list.map(
