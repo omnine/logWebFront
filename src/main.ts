@@ -17,6 +17,8 @@ export class CompMain extends LitElement {
 
     @state() log:string | undefined;
 
+
+
     @state()
     stage:number = 0;   // 0 - init, 1 - recording, 2- stopped,  3- data arrived
 
@@ -26,6 +28,9 @@ export class CompMain extends LitElement {
     @property() counter: number = 0;
     @property() intervalID: number = 0;
     @property({ type: String }) message: string = 'IIS Agent RealTime Log';
+    @state() clientIP:string = '';
+    @state() selectedNode:string | undefined;
+    @state() selectedLevel:string | undefined;
 
     @property()
     recordingStatus: boolean = false;
@@ -82,6 +87,8 @@ export class CompMain extends LitElement {
 
         this.intervalID = window.setInterval(() => this.tick(), 1000);
 
+        ky.post('/recording', {json: {level: this.selectedLevel, node: this.selectedNode, clientIP: this.clientIP}});
+
     }
 
     stop(event: Event) {
@@ -110,7 +117,24 @@ export class CompMain extends LitElement {
           });;
 
 
-    }    
+    }
+
+    changeClientIP(event: Event) {
+        const input = event.target as HTMLInputElement;
+        this.clientIP = input.value;
+    }
+
+    onChangeNode(event: Event) {
+        const input = event.target as HTMLInputElement;
+        console.log(input.value);
+        this.selectedNode = input.value;        
+    }
+
+    onChangeLevel(event: Event) {
+        const input = event.target as HTMLInputElement;
+        console.log(input.value);
+        this.selectedLevel = input.value;
+    }
 
     render() {
         return html`
@@ -122,7 +146,7 @@ export class CompMain extends LitElement {
             <p>Once the problem is reproduced, press the stop button.</p>
             <div>
                 <label for="node-select">Choose an application node:</label>
-                <select name="nodes" id="node-select">
+                <select name="nodes" id="node-select" @change="${this.onChangeNode}">
                     <option value="">--Please choose an option--</option>
                     <option value="owa">owa</option>
                     <option value="mapi">mapi</option>
@@ -134,7 +158,7 @@ export class CompMain extends LitElement {
                     <option value="Autodiscover">Autodiscover</option>
                 </select>
                 <label for="level-select">Log Level:</label>
-                <select name="levels" id="level-select">
+                <select name="levels" id="level-select" @change="${this.onChangeLevel}">
                     <option value="">--Please choose an option--</option>
                     <option value="Debug">Debug</option>
                     <option value="Warning">Warning</option>
@@ -142,7 +166,7 @@ export class CompMain extends LitElement {
                     <option value="Error">Error</option>
                     <option value="Fatal">Fatal</option>
                 </select>                
-                <input type="text" placeholder="Client IP">
+                <input type="text" @input=${this.changeClientIP} placeholder="Client IP">
             </div>
             <button @click=${this.reset}>Reset</button>
             <button @click=${this.recording} ?disabled=${this.stage == 1}>Record</button>
