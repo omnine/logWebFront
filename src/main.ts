@@ -121,8 +121,27 @@ export class CompMain extends LitElement {
             <p>Please press the record button to start recording, then reproduce your problem.</p>
             <p>Once the problem is reproduced, press the stop button.</p>
             <div>
-                <input type="text" placeholder="Node">
-                <input type="text" placeholder="Log Level">
+                <label for="node-select">Choose an application node:</label>
+                <select name="nodes" id="node-select">
+                    <option value="">--Please choose an option--</option>
+                    <option value="owa">owa</option>
+                    <option value="mapi">mapi</option>
+                    <option value="ews">ews</option>
+                    <option value="Microsoft-Server-ActiveSync">Microsoft-Server-ActiveSync</option>
+                    <option value="ecp">ecp</option>
+                    <option value="OAB">OAB</option>
+                    <option value="Rpc">Rpc</option>
+                    <option value="Autodiscover">Autodiscover</option>
+                </select>
+                <label for="level-select">Log Level:</label>
+                <select name="levels" id="level-select">
+                    <option value="">--Please choose an option--</option>
+                    <option value="Debug">Debug</option>
+                    <option value="Warning">Warning</option>
+                    <option value="Info">Info</option>
+                    <option value="Error">Error</option>
+                    <option value="Fatal">Fatal</option>
+                </select>                
                 <input type="text" placeholder="Client IP">
             </div>
             <button @click=${this.reset}>Reset</button>
