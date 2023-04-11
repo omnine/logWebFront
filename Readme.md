@@ -25,3 +25,7 @@ npm run build
 
 ## Size (Lit vs React)
 https://pinkhominid.github.io/react-v-lit/
+
+## Component Libraries
+
+[Carbon](https://web-components.carbondesignsystem.com/)
