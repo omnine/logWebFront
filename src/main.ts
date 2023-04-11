@@ -13,6 +13,10 @@ export class CompMain extends LitElement {
     :host {
         display: flex;
     }
+    select {
+        font-size: 0.9rem;
+        padding: 2px 5px;
+    }
     `;
 
     @state() log:string | undefined;
@@ -44,6 +48,8 @@ export class CompMain extends LitElement {
 
     reset() {
         this.stage = 0;
+        this.list = [];
+        this.log = "[]";
     }
 
     /*
@@ -107,8 +113,12 @@ export class CompMain extends LitElement {
             response.text().then(body => {
                 console.log(body);
                 this.log = body;
-                this.list = JSON.parse('["Peas", "Carrots", "Tomatoes"]');
                 this.stage = 3;
+                try {
+                    this.list = JSON.parse(body);
+                } catch(e) {
+                    alert(e); // error in the above string (in this case, yes)!
+                }
             });
             }
         )
@@ -145,9 +155,8 @@ export class CompMain extends LitElement {
             <p>Please press the record button to start recording, then reproduce your problem.</p>
             <p>Once the problem is reproduced, press the stop button.</p>
             <div>
-                <label for="node-select">Choose an application node:</label>
                 <select name="nodes" id="node-select" @change="${this.onChangeNode}">
-                    <option value="">--Please choose an option--</option>
+                    <option value="">--Choose an application node--</option>
                     <option value="owa">owa</option>
                     <option value="mapi">mapi</option>
                     <option value="ews">ews</option>
@@ -157,9 +166,8 @@ export class CompMain extends LitElement {
                     <option value="Rpc">Rpc</option>
                     <option value="Autodiscover">Autodiscover</option>
                 </select>
-                <label for="level-select">Log Level:</label>
                 <select name="levels" id="level-select" @change="${this.onChangeLevel}">
-                    <option value="">--Please choose an option--</option>
+                    <option value="">--Choose a level--</option>
                     <option value="Debug">Debug</option>
                     <option value="Warning">Warning</option>
                     <option value="Info">Info</option>
