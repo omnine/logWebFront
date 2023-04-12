@@ -31,7 +31,7 @@ export default {
     }),
   ],
   output: {
-    dir: 'build',
+    dir: 'dist',
   },
   preserveEntrySignatures: 'strict',
 };
