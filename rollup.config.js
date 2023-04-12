@@ -3,8 +3,7 @@ import  { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import {copy} from '@web/rollup-plugin-copy';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
-import pkgMinifyHTML from 'rollup-plugin-minify-html-literals';
-const minifyHTML = pkgMinifyHTML.default
+import template from "rollup-plugin-html-literals";
 import summary from 'rollup-plugin-summary';
 
 export default {
@@ -17,7 +16,7 @@ export default {
     // Resolve bare module specifiers to relative paths
     resolve(),
     // Minify HTML template literals
-    minifyHTML(),
+    template(),
     // Minify JS
     terser({
       ecma: 2020,
