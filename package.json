@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luixaviles/typescript-rollup.git"
+    "url": "git+https://github.com/omnine/logWebFront.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/luixaviles/typescript-rollup/issues"
+    "url": "https://github.com/omnine/logWebFront/issues"
   },
-  "homepage": "https://github.com/luixaviles/typescript-rollup#readme",
+  "homepage": "https://github.com/omnine/logWebFront#readme",
   "devDependencies": {
     "@web/dev-server": "0.1.38",
     "@web/rollup-plugin-html": "^1.11.1",

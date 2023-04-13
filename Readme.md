@@ -23,8 +23,16 @@ Build the Application
 npm run build
 ```
 
-## Size (Lit vs React)
-https://pinkhominid.github.io/react-v-lit/
+## Size Comparision (Lit vs React)
+
+```
+Size (GZIPPED, MINIFIED)
+React ESM + HTM	38 KB + 0.6 KB
+LitElement	6.9 KB
+```
+See the details in https://pinkhominid.github.io/react-v-lit/
+
+
 
 ## Component Libraries
 
