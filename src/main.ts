@@ -17,6 +17,9 @@ export class CompMain extends LitElement {
         font-size: 0.9rem;
         padding: 2px 5px;
     }
+    div {
+        margin: 10px auto;
+    }
     `;
 
     @state() log:string | undefined;
@@ -50,6 +53,10 @@ export class CompMain extends LitElement {
         this.stage = 0;
         this.list = [];
         this.log = "[]";
+    }
+
+    resize() {
+        ky.post('/resize', {json: {capacity: 2000}});
     }
 
     /*
@@ -154,6 +161,11 @@ export class CompMain extends LitElement {
                 especially when the problem can be reproduced.</p>
             <p>Please press the record button to start recording, then reproduce your problem.</p>
             <p>Once the problem is reproduced, press the stop button.</p>
+            <div>
+                <label for="capacity">Number of logs (200-10000):</label>
+                <input type="number" id="capacity" name="capacity"  min="200" max="10000" placeholder="2000">
+                <button @click=${this.resize}>Resize</button>
+            </div>
             <div>
                 <select name="nodes" id="node-select" @change="${this.onChangeNode}">
                     <option value="">--Choose an application node--</option>
