@@ -28,12 +28,12 @@
     "deepmerge": "^4.3.1",
     "rimraf": "^5.0.0",
     "rollup": "^3.20.2",
+    "rollup-plugin-copy": "^3.4.0",
     "typescript": "^5.0.4"
   },
   "dependencies": {
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.1",
-    "@web/rollup-plugin-copy": "^0.3.0",
     "ky": "^0.33.3",
     "lit": "^2.7.0",
     "rollup-plugin-html-literals": "^1.1.6",

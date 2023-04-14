@@ -5,7 +5,7 @@ import {when} from 'lit/directives/when.js';
 
 import ky from 'ky';
 
-import './clock';
+//import './clock';
 
 @customElement('comp-main')
 export class CompMain extends LitElement {
